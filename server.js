@@ -55,9 +55,10 @@ wss.on('connection', (ws) => {
                 }
             } else if (data.type === 'stop') {
                 if (isRunning) {
+                    const stopTime = Date.now() - globalStartTime;  // Calculate the stop time on the server
                     isRunning = false;
                     console.log('Timer stopped');
-                    broadcast({ type: 'stop' });
+                    broadcast({ type: 'stop', stopTime });  // Broadcast stop time to all clients
                 }
             } else if (data.type === 'reset') {
                 globalStartTime = null;
